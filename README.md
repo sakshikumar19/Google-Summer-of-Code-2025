@@ -12,7 +12,7 @@
 <br>
 
 <p align="center">
-<code> <a href="#-project-abstract">Project Abstract</a>&nbsp;&nbsp;&nbsp; <a href="#-key-results">Key Results</a>&nbsp;&nbsp;&nbsp; <a href="#-what-was-done">What Was Done</a>&nbsp;&nbsp;&nbsp; <a href="#-contributions">Contributions</a>&nbsp;&nbsp;&nbsp; <a href="#-discussion">Discussion</a>&nbsp;&nbsp;&nbsp; <a href="#-mentors">Mentors</a>&nbsp;&nbsp;&nbsp; <a href="#-links">Links</a>
+<code> <a href="#-project-abstract">Project Abstract</a>&nbsp;&nbsp;&nbsp; <a href="#-key-results">Key Results</a>&nbsp;&nbsp;&nbsp; <a href="#-what-was-done">What Was Done</a>&nbsp;&nbsp;&nbsp; <a href="#-contributions">Contributions</a>&nbsp;&nbsp;&nbsp; <a href="#-discussion">Discussion</a>&nbsp;&nbsp;&nbsp; <a href="#-how-to-reproduce">How to Reproduce</a>&nbsp;&nbsp;&nbsp; <a href="#-mentors">Mentors</a>&nbsp;&nbsp;&nbsp; <a href="#-links">Links</a>
 </code>
 </p>
 
@@ -186,3 +186,13 @@ Thank you also to collaborators in the "An environmental assessment of high-perf
 - **MetaGreenData Contributions:**
   - [PR #21 - Improved form validation feedback](https://github.com/GreenAlgorithms/MetaGreenData/pull/21)
   - [PR #20 - Key methods and styling implemented](https://github.com/GreenAlgorithms/MetaGreenData/pull/20)
+
+## Next Steps / Future Work
+
+1. **Extend to multi-metric models:** Move beyond pairwise correlations to regression models that incorporate multiple system metrics simultaneously.
+
+2. **Scheduler integration:** Add context from HTCondor/Kubernetes schedulers to relate queueing decisions and job placement to energy outcomes.
+
+3. **Time-series analysis:** Add temporal overlays and change-point detection for power vs load relationships to inspect temporal structure.
+
+4. **Public release of collation scripts:** After validation completes, release node exporter/collation scripts with automated cross-checks (core sum vs IPMI/BMC) and alerting.
