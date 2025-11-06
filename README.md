@@ -19,9 +19,7 @@
 <br>
 <br>
 
-I worked on energy profiling and analysis for scientific computing, building tools to validate power measurements and understand system behavior through Prometheus metrics. The work involved pairwise correlation analysis across disk, memory, network and process metrics, with a focus on power delta analysis. I identified spurious correlations in cumulative metrics and confirmed real relationships between power and system load during my Google Summer of Code term.
-
-This repository serves as a final report summary of my GSoC work and demonstrates the analysis pipeline developed for energy-aware computing.
+ This report summarizes my Google Summer of Code 2025 work on energy profiling and validation using Prometheus telemetry. It presents the key results, the reasoning behind them and how they inform tooling, developer workflows and future scheduling. Reproducibility and implementation details are documented in the main analysis repository.
 
 ## Project Abstract
 
