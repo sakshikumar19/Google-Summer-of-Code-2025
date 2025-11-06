@@ -35,7 +35,11 @@ Analysis on `wn3803100` shows several patterns that help us understand power-loa
   <img src="https://raw.githubusercontent.com/sakshikumar19/prometheus-energy-analysis/main/results/wn3803100/Power_Delta_(1min)_vs_Load_(1m)/2025-07-31T23-00_to_2025-08-01T11-00/scatter.png" width="450" />
 </p>
 
-This suggests instantaneous power does not track load linearly, likely due to job batching, scheduled bursts or delayed system responses. At 5-minute aggregation, broader system behavior becomes visible:
+This suggests instantaneous power does not track load linearly, likely due to job batching, scheduled bursts or delayed system responses.
+
+Takeaway: short-term load is not a reliable proxy for instantaneous power.
+
+At 5-minute aggregation, broader system behavior becomes visible:
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sakshikumar19/prometheus-energy-analysis/main/results/wn3803100/Power_Delta_(5min)_vs_Load_(1m)/2025-07-31T23-00_to_2025-08-01T11-00/scatter.png" width="450" />
@@ -43,19 +47,29 @@ This suggests instantaneous power does not track load linearly, likely due to jo
 
 The patterns suggest periodicity or phase transitions that could benefit from time-series analysis.
 
+Takeaway: use time-series overlays or change-point detection to capture regime shifts.
+
 The relationship between power and disk I/O shows non-linear coupling. Power Delta (5 min) vs Disk I/O Time:
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sakshikumar19/prometheus-energy-analysis/main/results/wn3803100/Power_Delta_(5min)_vs_Disk_IO_Time/2025-07-31T23-00_to_2025-08-01T11-00/scatter.png" width="450" />
 </p>
 
-This shows discontinuous clusters with gaps, indicating power can vary without corresponding disk activity, likely due to bursty or threshold-based behavior. At 1-minute resolution:
+This shows discontinuous clusters with gaps, indicating power can vary without corresponding disk activity, likely due to bursty or threshold-based behavior.
+
+Takeaway: power rises can be decoupled from disk activity; look to CPU/memory.
+
+At 1-minute resolution:
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sakshikumar19/prometheus-energy-analysis/main/results/wn3803100/Power_Delta_(1min)_vs_Disk_IO_Time/2025-07-31T23-00_to_2025-08-01T11-00/scatter.png" width="450" />
 </p>
 
-There's an inverse relationship: as power increases, disk I/O time decreases, which confirms that high-power periods are CPU-bound rather than I/O-bound. This pattern shows we can classify workload types from external telemetry. At coarser temporal scales, Power Delta (60 min) vs Load (1 m) illustrates the challenge of mismatched temporal resolution:
+There's an inverse relationship: as power increases, disk I/O time decreases, which confirms that high-power periods are CPU-bound rather than I/O-bound. This pattern shows we can classify workload types from external telemetry.
+
+Why it matters: classify CPU- vs I/O-bound periods without code instrumentation.
+
+At coarser temporal scales, Power Delta (60 min) vs Load (1 m) illustrates the challenge of mismatched temporal resolution:
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/sakshikumar19/prometheus-energy-analysis/main/results/wn3803100/Power_Delta_(60min)_vs_Load_(1m)/2025-07-31T23-00_to_2025-08-01T11-00/scatter.png" width="450" />
@@ -63,11 +77,28 @@ There's an inverse relationship: as power increases, disk I/O time decreases, wh
 
 Comparing an hourly power delta to a single load snapshot requires aggregating load per hour (min/max/quartiles) to make meaningful comparisons.
 
-Quantitatively, Power Delta (10 min) vs Load (1 m) on `wn3803100` shows Pearson 0.9968 and Spearman 0.6869 (N = 72), confirming strong positive correlation. Power Delta (10 min) vs Disk I/O Time shows Pearson -0.4065 and Spearman -0.3007 (N = 72), consistent with the inverse tendency observed visually.
+Tip: summarize load per hour (min/max/quartiles) before comparing to hourly power.
 
-Pairwise comparisons on `atlaslab18` establish baseline relationships across system dimensions. Disk Read vs Written Bytes shows Pearson 0.63 but Spearman 0.05 (N = 1441), indicating linear correlation exists but non-linear patterns weaken rank correlation, which suggests mixed workload types. Disk I/O Time vs Load shows weak correlation (Pearson 0.05, Spearman 0.11, N = 1441), confirming load is driven more by CPU queue depth than disk saturation, consistent with the power-I/O findings. Memory behavior shows Mem Available vs Load with Pearson -0.03 but Spearman -0.26 (N = 1441), indicating memory drops slightly as load rises but not linearly, consistent with caching behavior. Mem Cached vs Load shows near-zero correlation (Pearson 0.03, Spearman 0.04, N = 1441), suggesting cached memory is independent of load.
+Numbers at a glance (wn3803100):
 
-Process metrics show that Procs Running vs Load has near-zero correlation (Pearson -0.03, Spearman -0.03, N = 1441), confirming load reflects CPU queue depth rather than simple process enumeration. Procs Blocked vs Load also shows no meaningful relationship (Pearson 0.02, Spearman -0.03, N = 1441). Network patterns show Net RX vs TX Bytes with moderate symmetry (Pearson 0.27, Spearman 0.45, N = 1441) after rate conversion, which validates the pipeline's handling of counter metrics. Net RX Errors vs Drops shows NaN (both zero), indicating healthy network operation in the sampled window.
+- Power Delta (10 min) vs Load (1 m): Pearson 0.9968, Spearman 0.6869 (N=72)
+- Power Delta (10 min) vs Disk I/O Time: Pearson -0.4065, Spearman -0.3007 (N=72)
+
+System-wide baselines (atlaslab18):
+
+- Disk: Reads vs Writes Pearson 0.63, Spearman 0.05 (mixed workload types)
+- Load vs Disk I/O Time: weak (Pearson 0.05, Spearman 0.11) → load reflects CPU queue more than disk
+- Memory: Mem Available vs Load Pearson -0.03, Spearman -0.26 (cache effects); Mem Cached vs Load ~0
+- Process: Procs Running vs Load ~0; Procs Blocked vs Load ~0
+- Network: RX vs TX Bytes moderate (Pearson 0.27, Spearman 0.45) after rate conversion; errors/drops ~0
+
+Practical insights (from the above):
+
+- If power rises while disk I/O time falls, the period is likely CPU-bound. Focus profiling on CPU paths.
+- When comparing hourly power to load, aggregate load by hour first (min, max, quartiles).
+- Use 5-minute windows to reveal structure, then inspect 1-minute slices to find causes.
+- Convert counters to rates before correlating to avoid false positives.
+- Check RX vs TX symmetry and near-zero errors to rule out network as a bottleneck.
 
 ## Discussion
 
@@ -77,9 +108,15 @@ This work is part of a three-part ecosystem that enables carbon-aware computing 
 
 - **Collation scripts (Glasgow):** Assist with data collation on nodes and provide sanity checks for data integrity.
 - **Analysis scripts (this project):** Provide external monitoring and visualization to understand system behavior and possibilities.
-- **Internal monitoring (ongoing mentor work):** Embeds carbon tracking inside physics computational code, helping developers understand where their costs are and improve their code.
+- **Internal monitoring (mentor's ongoing work):** Embeds carbon tracking inside physics computational code, helping developers understand where their costs are and improve their code.
 
 The collation and analysis scripts together provide external monitoring (external to the code). The internal monitoring can then be validated against this external monitoring. Internal monitoring helps developers understand where their costs are and improve, while collation scripts enable sanity checks and the analysis scripts help understand what possibilities exist for a system. The focus on one machine, rather than cluster-wide analysis, means this analysis relates to the specific instrumented code being run, which enables validation and better understanding of behavior for IO-bound software and CPU-bound software.
+
+Where the findings help:
+
+- CPU-bound identification: the inverse power vs disk I/O relationship lets us flag CPU-bound periods from telemetry alone, validating internal monitors and guiding code profiling.
+- Scheduling signals: clustered power-load structures and periodicity hints can inform when to place jobs (e.g., align CPU-heavy work with greener windows).
+- Developer feedback: per-machine correlations and plots provide a quick read on whether recent changes increased CPU pressure or shifted I/O behavior.
 
 In combination, this enables validation (internal vs external), developer insight into cost drivers and a path toward scheduling based on potential carbon cost. The one-machine focus ties analysis to specific instrumented runs (IO-bound vs CPU-bound), which helps us understand behavior and enables validation that would be confounded in cluster-wide aggregates.
 
