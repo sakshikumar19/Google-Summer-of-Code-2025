@@ -12,7 +12,7 @@
 <br>
 
 <p align="center">
-<code> <a href="#-project-abstract">Project Abstract</a>&nbsp;&nbsp;&nbsp; <a href="#-key-results">Key Results</a>&nbsp;&nbsp;&nbsp; <a href="#-what-was-done">What Was Done</a>&nbsp;&nbsp;&nbsp; <a href="#-contributions">Contributions</a>&nbsp;&nbsp;&nbsp; <a href="#-discussion">Discussion</a>&nbsp;&nbsp;&nbsp; <a href="#-how-to-reproduce">How to Reproduce</a>&nbsp;&nbsp;&nbsp; <a href="#-mentors">Mentors</a>&nbsp;&nbsp;&nbsp; <a href="#-links">Links</a>
+<code> <a href="#project-abstract">Project Abstract</a>&nbsp;&nbsp;&nbsp; <a href="#key-results">Key Results</a>&nbsp;&nbsp;&nbsp; <a href="#what-was-done">What Was Done</a>&nbsp;&nbsp;&nbsp; <a href="#contributions">Contributions</a>&nbsp;&nbsp;&nbsp; <a href="#discussion">Discussion</a>&nbsp;&nbsp;&nbsp; <a href="#mentors">Mentors</a>&nbsp;&nbsp;&nbsp; <a href="#links">Links</a>&nbsp;&nbsp;&nbsp; <a href="#next-steps--future-work">Next Steps / Future Work</a>
 </code>
 </p>
 
