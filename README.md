@@ -23,7 +23,7 @@
 
 ## Project Abstract
 
-The Prometheus Energy Profiler provides a reproducible analysis workflow to correlate power consumption with system telemetry from Prometheus monitoring systems. This project enables external validation of energy measurements and produces clear visualizations. The work includes pairwise correlation analysis across disk, memory, network and process metrics to establish baseline relationships, with a focus on power delta analysis. Beyond the analysis pipeline, contributions include revamping the MetaGreenData Django application for green computing metadata format, conducting literature review for the collaborative research paper "An environmental assessment of high-performance computing services in a school of engineering" and developing flexible node exporter scripts for real-time data collation.
+The Prometheus Energy Profiler provides a reproducible analysis workflow to correlate power consumption with system telemetry from Prometheus monitoring systems. This project enables external validation of energy measurements and produces clear visualizations. The work includes pairwise correlation analysis across disk, memory, network and process metrics to establish baseline relationships, with a focus on power delta analysis. Beyond the analysis pipeline, contributions include revamping the MetaGreenData Django application for green computing metadata format, conducting literature review for the collaborative research paper "Tackling the Energetic Cost and Resource Consumption of Research Computing: A Life Cycle Perspective on Hardware and Software Efficiency at The University of Manchester" and developing flexible node exporter scripts for real-time data collation.
 
 ## Key Results
 
@@ -204,7 +204,7 @@ These improvements help researchers and developers submitting energy and carbon 
 
 ### Research Contribution: Literature Review
 
-Conducted literature review for the collaborative research paper **"An environmental assessment of high-performance computing services in a school of engineering"** with authors from the University of Manchester. The literature review covered the state of the art of environmental assessment of computing services, including indicators, metrics, hotspots and research gaps. This work bridges the gap between practical energy profiling tools and academic research on computing energy costs and is targeted for submission later this year.
+Conducted literature review for the collaborative research paper **"Tackling the Energetic Cost and Resource Consumption of Research Computing: A Life Cycle Perspective on Hardware and Software Efficiency at The University of Manchester"** with authors from the University of Manchester. The literature review covered the state of the art of environmental assessment of computing services, including indicators, metrics, hotspots and research gaps. This work bridges the gap between practical energy profiling tools and academic research on computing energy costs and is targeted for submission later this year.
 
 ### Node Exporter/Collation Scripts (Glasgow)
 
@@ -223,7 +223,7 @@ A huge thank you to my mentors for their guidance, patience and insights through
 - **Caterina Doglioni** - [GitHub](https://github.com/caterina-doglioni)
 - **Michael Sparks** - [GitHub](https://github.com/sparkslabs)
 
-Thank you also to collaborators in the "An environmental assessment of high-performance computing services in a school of engineering" research paper at the University of Manchester.
+Thank you also to collaborators in the "Tackling the Energetic Cost and Resource Consumption of Research Computing" research paper at the University of Manchester.
 
 ## Links
 
