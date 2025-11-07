@@ -185,8 +185,8 @@ Significant contributions were made to the [MetaGreenData Django application](ht
 
 |                              PR Link                               |             Description             |      Status      |
 | :----------------------------------------------------------------: | :---------------------------------: | :--------------: |
-| [PR #21](https://github.com/GreenAlgorithms/MetaGreenData/pull/21) |  Improved form validation feedback  | ✅ Merged Jun 3  |
-| [PR #20](https://github.com/GreenAlgorithms/MetaGreenData/pull/20) | Key methods and styling implemented | ✅ Merged May 29 |
+| [PR #21](https://github.com/GreenAlgorithms/MetaGreenData/pull/21) |  Improved form validation feedback  | ✅ Merged  |
+| [PR #20](https://github.com/GreenAlgorithms/MetaGreenData/pull/20) | Key methods and styling implemented | ✅ Merged |
 
 </div>
 
