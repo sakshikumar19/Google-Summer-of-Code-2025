@@ -102,11 +102,21 @@ Practical insights (from the above):
 
 ### How this work fits with the wider effort
 
-This work is part of a three-part ecosystem that enables carbon-aware computing and future job scheduling based on potential carbon cost:
+This work is part of a three-part ecosystem that enables carbon-aware computing and future job scheduling based on potential carbon cost. The system works as follows:
 
-- **Collation scripts (Glasgow):** Assist with data collation on nodes and provide sanity checks for data integrity.
-- **Analysis scripts (this project):** Provide external monitoring and visualization to understand system behavior and possibilities.
-- **Internal monitoring (mentor's ongoing work):** Embeds carbon tracking inside physics computational code, helping developers understand where their costs are and improve their code.
+**Data Collection Layer (Glasgow's Collation Scripts):**
+- Collect system telemetry (CPU, memory, disk, network) and power measurements from compute nodes.
+- Perform real-time validation checks (e.g., comparing core telemetry sums against IPMI/BMC power measurements)
+- Export data to Prometheus for centralized monitoring
+
+**Analysis Layer (This Project):**
+- Processes collected telemetry data to identify patterns and correlations between system metrics and power consumption
+- Provides external monitoring by analyzing system behavior from outside the application code
+- Generates visualizations and insights to understand workload characteristics (CPU-bound vs I/O-bound)
+
+**Application Layer (Internal Monitoring):**
+- Instruments application code directly to track energy consumption at the function/module level
+- Provides developers with granular insights into where energy costs occur within their code
 
 The collation and analysis scripts together provide external monitoring (external to the code). The internal monitoring can then be validated against this external monitoring. Internal monitoring helps developers understand where their costs are and improve, while collation scripts enable sanity checks and the analysis scripts help understand what possibilities exist for a system. The focus on one machine, rather than cluster-wide analysis, means this analysis relates to the specific instrumented code being run, which enables validation and better understanding of behavior for IO-bound software and CPU-bound software.
 
