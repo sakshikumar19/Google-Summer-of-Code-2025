@@ -216,6 +216,19 @@ Developed flexible node exporter and collation scripts for Glasgow nodes that as
 
 The scripts are currently private while validation completes. Once validated, these scripts will provide infrastructure for the three-part ecosystem: collation scripts enable data collection, analysis scripts provide understanding and internal monitoring enables developer insight.
 
+## AI Assistance
+
+During development, I employed a locally configured AI assistant tuned with the following SYSTEM PROMPT:
+
+> *“You are a code auditor. Provide micro-suggestions focused on clarity, naming consistency, structure, layout and minor completeness gaps. Avoid major refactors or architectural changes.”*
+
+This setup allowed the AI to consistently provide concise, review-style feedback on:
+* Django PR naming and form-field clarity
+* Test-suite structure for the Prometheus analysis pipeline
+* Coverage checks for edge cases (like empty or malformed Prometheus result arrays)
+
+The goal was to accelerate small quality improvements in the codebase.
+
 ## Mentors
 
 A huge thank you to my mentors for their guidance, patience and insights throughout GSoC.
